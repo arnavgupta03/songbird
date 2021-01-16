@@ -1,7 +1,8 @@
 from flask import Flask, render_template, redirect, request, url_for, session
 from decouple import config
 from authlib.integrations.flask_client import OAuth, OAuthError
-from loadingscripts import cleanRT, onlyText, cleanEnd
+from loadingscripts import cleanRT, onlyText, cleanEnd, listToString, onlyAlphabet
+from markovscripts import chain
 
 app = Flask(__name__)
 app.secret_key = config('ACCESS_SECRET')
@@ -50,7 +51,7 @@ def logout():
 @app.route('/tweets')
 def tweets():
     url = 'statuses/home_timeline.json'
-    params = {'count': 50, 'trim_user': True, 'exclude_replies': True, 'include_entities': False}
+    params = {'count': 200, 'trim_user': True, 'exclude_replies': True, 'include_entities': False}
     prev_id = request.args.get('prev')
     if prev_id:
         params['max_id'] = prev_id
@@ -60,7 +61,9 @@ def tweets():
     tweets = onlyText(tweets)
     tweets = cleanRT(tweets)
     tweets = cleanEnd(tweets)
-    return render_template('tweets.html', tweets = tweets)
+    sTweets = listToString(tweets)
+    #sTweets = onlyAlphabet(sTweets)
+    return render_template('tweets.html', tweets = tweets, sTweets = sTweets)
 
 if __name__ == '__main__':
     app.run(debug=True)
