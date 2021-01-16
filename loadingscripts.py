@@ -25,7 +25,10 @@ def listToString(tweets):
     return sTweets
 
 def onlyAlphabet(sTweets):
-    return sTweets.replace('…', '')
+    sTweets = sTweets.replace('…', '')
+    sTweets = sTweets.replace('#', '')
+    sTweets = sTweets.replace('@', '')
+    return sTweets
 
 def deEmojify(text):
     return re.sub(emoji.get_emoji_regexp(), r"", text)
