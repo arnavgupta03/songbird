@@ -3,6 +3,8 @@ from decouple import config
 from authlib.integrations.flask_client import OAuth, OAuthError
 from loadingscripts import cleanRT, onlyText, cleanEnd, listToString, onlyAlphabet, deEmojify
 from markovscripts import chain
+import base64, json, requests
+from urllib.parse import quote
 
 app = Flask(__name__)
 app.secret_key = config('ACCESS_SECRET')
@@ -48,6 +50,8 @@ def logout():
     session.pop('user', None)
     return redirect('/')
 
+markovified = ""
+
 @app.route('/tweets')
 def tweets():
     url = 'statuses/home_timeline.json'
@@ -65,7 +69,66 @@ def tweets():
     sTweets = onlyAlphabet(sTweets)
     sTweets = deEmojify(sTweets)
     markovified = chain(sTweets)
-    return render_template('tweets.html', tweets = tweets, sTweets = sTweets, markovified = markovified)
+    session['markovified'] = markovified
+    #return render_template('tweets.html', tweets = tweets, sTweets = sTweets, markovified = markovified)
+    return redirect('/login-spotify')
+
+SPOTIFY_CLIENT_ID = config("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = config("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
+SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
+SPOTIFY_API_URL = 'https://api.spotify.com/v1'
+
+SPOTIFY_REDIRECT_URI = 'http://localhost:5000/authorize_spotify'
+SPOTIFY_SCOPES = 'user-top-read playlist-modify-private'
+SPOTIFY_STATE = ""
+SPOTIFY_SHOW_DIALOG = 'true'
+
+spotify_auth_query_params = {
+    'response_type': 'code',
+    'redirect_uri': SPOTIFY_REDIRECT_URI,
+    'scope': SPOTIFY_SCOPES,
+    'show_dialog': SPOTIFY_SHOW_DIALOG,
+    'client_id': SPOTIFY_CLIENT_ID
+}
+
+@app.route('/login-spotify')
+def spotify_login():
+    url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in spotify_auth_query_params.items()])
+    auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+    return redirect(auth_url)
+
+@app.route('/authorize_spotify')
+def authorize_spotify():
+    auth_token = request.args['code']
+    code_payload = {
+        'grant_type': 'authorization_code',
+        'code': str(auth_token),
+        'redirect_uri': SPOTIFY_REDIRECT_URI,
+        'client_id': SPOTIFY_CLIENT_ID,
+        'client_secret': SPOTIFY_CLIENT_SECRET,
+    }
+    post_request = requests.post(SPOTIFY_TOKEN_URL, data = code_payload)
+
+    response_data = json.loads(post_request.text)
+    access_token = response_data['access_token']
+    refresh_token = response_data['refresh_token']
+    token_type = response_data['token_type']
+    expires_in = response_data['expires_in']
+
+    authorization_header = {'Authorization': 'Bearer {}'.format(access_token)}
+
+    markovified = session.get('markovified')
+
+    user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
+    profile_response = requests.get(user_profile_api_endpoint, headers = authorization_header)
+    profile_data = json.loads(profile_response.text)
+    return render_template('spotify.html', response_data = profile_data, strings = markovified)
+
+@app.route('/spotify')
+def spotify():
+    return render_template('spotify.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
