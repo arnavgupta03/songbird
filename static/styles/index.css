@@ -1,20 +1,29 @@
 html {
-    background: #f8d7d0;
+    background:dodgerblue;
+    font: caption;
+}
+
+.intro {
+    text-align: center;
+    text-emphasis: bold;
+    font-weight: bolder;
+}
+
+a {
+    text-align: center;
 }
 
 button {
-    padding: 0.5cm 0.5cm;
-    margin: 0 0.3em 0.3em 0;
+    padding: 1.2cm 1.2cm;
+    margin: 1.2cm 1.2em 1.2em 1.2cm;
     border: none;
     box-sizing: border-box;
     font-weight: bold;
-    background: #caeefd;
-    text-align: center;
-    position: relative;
+    background: #93c8df;
     border-radius: 20px;
-    vertical-align: middle;
+    text-align: center;
 }
 
 button:hover {
-    background: #b2def0;
+    background: #a2cddd;
 }
