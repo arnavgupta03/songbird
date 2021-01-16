@@ -25,15 +25,7 @@ def listToString(tweets):
     return sTweets
 
 def onlyAlphabet(sTweets):
-    toRemove = []
-
-    for i in range(len(sTweets)):
-        if sTweets[i].isdigit() or sTweets[i].isalpha():
-            toRemove.append(i)
-
-    for i in toRemove:
-        sTweets = sTweets[:i] + sTweets[(i + 1):]
-    return sTweets
+    return sTweets.replace('…', '')
 
 def deEmojify(text):
     return re.sub(emoji.get_emoji_regexp(), r"", text)

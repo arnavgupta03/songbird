@@ -62,6 +62,7 @@ def tweets():
     tweets = cleanRT(tweets)
     tweets = cleanEnd(tweets)
     sTweets = listToString(tweets)
+    sTweets = onlyAlphabet(sTweets)
     sTweets = deEmojify(sTweets)
     markovified = chain(sTweets)
     return render_template('tweets.html', tweets = tweets, sTweets = sTweets, markovified = markovified)
