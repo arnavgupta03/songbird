@@ -1,3 +1,6 @@
+import re
+import emoji
+
 def onlyText(tweets):
     for i, tweet in enumerate(tweets):
         tweets[i] = tweet['text']
@@ -11,8 +14,8 @@ def cleanRT(tweets):
 
 def cleanEnd(tweets):
     for i, tweet in enumerate(tweets):
-        if "https://t.co" in tweet:
-            tweets[i] = tweet.replace(tweet[tweet.index("https://t.co"):], '')
+        if "https://t." in tweet:
+            tweets[i] = tweet.replace(tweet[tweet.index("https://t."):], '')
     return tweets
 
 def listToString(tweets):
@@ -31,3 +34,6 @@ def onlyAlphabet(sTweets):
     for i in toRemove:
         sTweets = sTweets[:i] + sTweets[(i + 1):]
     return sTweets
+
+def deEmojify(text):
+    return re.sub(emoji.get_emoji_regexp(), r"", text)

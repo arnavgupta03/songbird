@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, url_for, session
 from decouple import config
 from authlib.integrations.flask_client import OAuth, OAuthError
-from loadingscripts import cleanRT, onlyText, cleanEnd, listToString, onlyAlphabet
+from loadingscripts import cleanRT, onlyText, cleanEnd, listToString, onlyAlphabet, deEmojify
 from markovscripts import chain
 
 app = Flask(__name__)
@@ -62,8 +62,9 @@ def tweets():
     tweets = cleanRT(tweets)
     tweets = cleanEnd(tweets)
     sTweets = listToString(tweets)
-    #sTweets = onlyAlphabet(sTweets)
-    return render_template('tweets.html', tweets = tweets, sTweets = sTweets)
+    sTweets = deEmojify(sTweets)
+    markovified = chain(sTweets)
+    return render_template('tweets.html', tweets = tweets, sTweets = sTweets, markovified = markovified)
 
 if __name__ == '__main__':
     app.run(debug=True)
