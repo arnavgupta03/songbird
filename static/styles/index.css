@@ -1,8 +1,20 @@
 html {
-    background-color:cornflowerblue;
+    background: #f8d7d0;
 }
 
-div.login {
+button {
+    padding: 0.5cm 0.5cm;
+    margin: 0 0.3em 0.3em 0;
+    border: none;
+    box-sizing: border-box;
+    font-weight: bold;
+    background: #caeefd;
     text-align: center;
+    position: relative;
+    border-radius: 20px;
     vertical-align: middle;
+}
+
+button:hover {
+    background: #b2def0;
 }
