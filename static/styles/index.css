@@ -1,14 +1,14 @@
 html {
-    background:dodgerblue;
+    background: tan;
     font: caption;
 }
 
-.intro {
+.display-1 {
     text-align: center;
-    text-emphasis: bold;
-    font-weight: bolder;
 }
 
+
+/*
 .button {
     top: 50%;
     left: 50%;
@@ -16,11 +16,16 @@ html {
     transform: translate(-50%, -50%);
     position: absolute;
 }
+*/
 
 a {
-    text-align: center;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: absolute;
 }
-
+ /*
 button {
     padding: 1.2cm 1.2cm;
     margin: 1.2cm 1.2em 1.2em 1.2cm;
@@ -31,7 +36,38 @@ button {
     border-radius: 20px;
     text-align: center;
 }
+*/
 
-button:hover {
-    background: #a2cddd;
+#box {
+    width: 750px;
+    height: 500px;
+    border-radius: 30px;
+    position: absolute;
+    background-color: rgb(80, 117, 211);
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.75);
+}
+
+.display-1 {
+    color: tan;
+    font-style: oblique;
+    font-family: fantasy;
+}
+
+.description {
+    color: tan;
+    font-style: inherit;
+    font-family: sans-serif;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
