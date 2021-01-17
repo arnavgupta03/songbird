@@ -2,20 +2,17 @@ html {
     background: tan;
 }
 
-.display-1 {
-    text-align: center;
-}
-
 a {
     margin: 0 auto;
     align-items: center;
     justify-content: center;
     display: flex;
+    width: 0;
 }
 
 #box {
-    width: 750px;
-    height: 390px;
+    width: 80%;
+    height: 55%;
     border-radius: 30px;
     position: absolute;
     background-color: rgb(80, 117, 211);
@@ -34,6 +31,7 @@ a {
     font-family: 'RubikRegular';
     font-weight: normal;
     font-style: normal; 
+    text-align: center;
 }
 
 .description {
