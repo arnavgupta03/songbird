@@ -12,8 +12,8 @@ html {
 }
 
 #box {
-    width: 800px;
-    height: 600px;
+    width: 75%;
+    height: 90%;
     border-radius: 30px;
     position: absolute;
     background-color: rgb(80, 117, 211);
@@ -28,10 +28,9 @@ html {
 }
 
 iframe {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
     border-radius: 20px;
+}
+
+.spotify-playlist {
+    text-align: center;
 }
