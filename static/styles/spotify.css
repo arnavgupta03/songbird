@@ -7,11 +7,13 @@ html {
     font-weight: normal;
     font-style: normal;
     color: white;
+    text-align: center;
+    font-size: 2.1rem;
 }
 
 #box {
     width: 800px;
-    height: 700px;
+    height: 600px;
     border-radius: 30px;
     position: absolute;
     background-color: rgb(80, 117, 211);
