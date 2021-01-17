@@ -79,7 +79,7 @@ SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
 SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_API_URL = 'https://api.spotify.com/v1'
 
-SPOTIFY_REDIRECT_URI = 'http://localhost:5000/authorize_spotify'
+SPOTIFY_REDIRECT_URI = url_for('authorize_spotify')
 SPOTIFY_SCOPES = 'user-top-read playlist-modify-private playlist-modify-public'
 SPOTIFY_STATE = ""
 SPOTIFY_SHOW_DIALOG = 'true'
