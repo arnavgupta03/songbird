@@ -1,0 +1,19 @@
+html {
+    background-color: tan;
+}
+
+#box {
+    width: 750px;
+    height: 390px;
+    border-radius: 30px;
+    position: absolute;
+    background-color: rgb(80, 117, 211);
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.75);
+}
