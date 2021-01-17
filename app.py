@@ -69,6 +69,8 @@ def tweets():
     sTweets = onlyAlphabet(sTweets)
     sTweets = deEmojify(sTweets)
     markovified = chain(sTweets)
+    session.pop('token', None)
+    session.pop('user', None)
     session['markovified'] = markovified
     #return render_template('tweets.html', tweets = tweets, sTweets = sTweets, markovified = markovified)
     return redirect('/login-spotify')
@@ -117,9 +119,6 @@ def authorize_spotify():
     expires_in = response_data['expires_in']
 
     authorization_header = {'Authorization': 'Bearer {}'.format(access_token)}
-
-    session.pop('token', None)
-    session.pop('user', None)
 
     markovified = session.get('markovified')
 
