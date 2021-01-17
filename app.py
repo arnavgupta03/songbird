@@ -8,7 +8,6 @@ from urllib.parse import quote
 from waitress import serve
 import logging, os
 
-app = Flask(__name__)
 app.secret_key = config('ACCESS_SECRET')
 app.config.from_object('config')
 
@@ -25,11 +24,6 @@ oauth.register(
 @app.errorhandler(OAuthError)
 def handle_error(error):
     return render_template('error.html', error=error)
-
-@app.route('/')
-def homepage():
-    user = session.get('user')
-    return render_template('index.html', user=user)
 
 @app.route('/login')
 def login():
@@ -195,11 +189,16 @@ def spotify():
 def create_app():
   try:
 
-    web_app = Flask(__name__)
+    app = Flask(__name__)
+
+    @app.route('/')
+    def homepage():
+        user = session.get('user')
+        return render_template('index.html', user=user)
 
     logging.info('Starting up..')
 
-    return web_app
+    return app
 
   except Exception as e:
     logging.exception(e)
