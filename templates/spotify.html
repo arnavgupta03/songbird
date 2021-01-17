@@ -15,11 +15,11 @@
         <br>
         <!--p>{{ response_data }}</p>
         <p>{{ strings }}</p-->
-        <h4 class="description">Here is what our AI came up with: {{ strings }}</p>
+        <p class="description"><strong>Here is what our AI came up with: </strong> {{ strings }}</p>
         <br><br>
-        <h4 class="description">Here is the playlist that our AI generated based on the vibe of your Twitter timeline.</p>
+        <p class="description">Here is the playlist that our AI generated based on the vibe of your Twitter timeline.</p>
         <br><br>
-        <iframe src="{{  }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <iframe src="{{ playlist_url }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
 </body>
 </html>
