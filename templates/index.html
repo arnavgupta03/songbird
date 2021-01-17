@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel= "stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script
+      src="https://kit.fontawesome.com/0ef005cace.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" media="screen" href="http://fontlibrary.org/face/rubik" type="text/css"/> 
+    
     <title>Welcome Page</title>
 </head>
 <body>
@@ -24,6 +29,10 @@
         <div class="d-grid gap-2">
             <a href="/login" class="login"><button class="btn btn-light btn-lg"><img src="{{ url_for('static', filename='twitter_sign_in.png') }}"></button></a>
         </div>
+        <figure class="figure">
+            <div class="d-grid gap-2">
+                <a href="/login" class="login"><button class="btn btn-primary btn-lg"><img src="{{ url_for('static', filename='twitter_sign_in.png') }}"> + <i class="fab fa-spotify"></i></button></a>
+            </div>
         </figure>
     </div>
 </body>
