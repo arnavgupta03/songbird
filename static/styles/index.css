@@ -7,40 +7,16 @@ html {
     text-align: center;
 }
 
-
-/*
-.button {
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    position: absolute;
-}
-*/
-
 a {
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    position: absolute;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
- /*
-button {
-    padding: 1.2cm 1.2cm;
-    margin: 1.2cm 1.2em 1.2em 1.2cm;
-    border: none;
-    box-sizing: border-box;
-    font-weight: bold;
-    background: #93c8df;
-    border-radius: 20px;
-    text-align: center;
-}
-*/
 
 #box {
     width: 750px;
-    height: 500px;
+    height: 390px;
     border-radius: 30px;
     position: absolute;
     background-color: rgb(80, 117, 211);
@@ -55,15 +31,17 @@ button {
 }
 
 .display-1 {
-    color: tan;
-    font-style: oblique;
-    font-family: fantasy;
+    color: white;
+    font-family: 'RubikRegular';
+    font-weight: normal;
+    font-style: normal; 
 }
 
 .description {
-    color: tan;
-    font-style: inherit;
-    font-family: sans-serif;
+    color: white;
+    font-family: 'RubikRegular';
+    font-weight: normal;
+    font-style: normal; 
     text-align: center;
     top: 0;
     bottom: 0;

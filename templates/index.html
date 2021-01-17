@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" media="screen" href="http://fontlibrary.org/face/rubik" type="text/css"/> 
     <title>Welcome Page</title>
 </head>
 <body>
     <div id=box>
+        <br>
         <h1 class="display-1">Welcome to Songbird!</h1>
+        <br>
         <div class="description">
             <h3>Songbird gives you music recommendations based on the vibe that your twitter feed gives our AI.</h3>
-            <h3>Login to Twitter and Spotify to see your music recommendations.</h3>
+            <h3>Login to Twitter and Spotify to see your music recommendations. (Twitter login automatically redirects to Spotify login)</h3>
         </div>
-        <figure class="figure">
-            <div class="d-grid gap-2">
-                <a href="/login" class="login"><button class="btn btn-primary btn-lg"><img src="{{ url_for('static', filename='twitter_sign_in.png') }}"></button></a>
-            </div>
+        <br>
+        <br>
+        <div class="d-grid gap-2">
+            <a href="/login" class="login"><button class="btn btn-light btn-lg"><img src="{{ url_for('static', filename='twitter_sign_in.png') }}"></button></a>
+        </div>
         </figure>
     </div>
 </body>
