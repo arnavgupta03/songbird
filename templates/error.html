@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/error.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" media="screen" href="http://fontlibrary.org/face/rubik" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Error Page</title>
 </head>
 <body>
-    <p>An error has occurred.</p>
-    <a href="/">Home Page</a>
+    <div id=box>
+        <p class="error">An error has occurred.</p>
+        <a href="/" class="homepage"><button class="btn btn-lg btn-light"><h1>Home Page</h1></button></a>
+    </div>
 </body>
 </html>
