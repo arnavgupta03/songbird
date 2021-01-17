@@ -123,11 +123,31 @@ def authorize_spotify():
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
     profile_response = requests.get(user_profile_api_endpoint, headers = authorization_header)
     profile_data = json.loads(profile_response.text)
-    return render_template('spotify.html', response_data = profile_data, strings = markovified)
+
+    personalization_api_endpoint = "{}/me/top/artists".format(SPOTIFY_API_URL)
+    personalization_params = {
+        'time_range': 'long_term',
+        'limit': '50',
+    }
+    personalization_response = requests.get(personalization_api_endpoint, headers = authorization_header, params = personalization_params)
+    personalization_data = json.loads(personalization_response.text)
+
+    song_counter = 0
+    song_search_api_endpoint = "{}/search".format(SPOTIFY_API_URL)
+
+    """for word in markovified.split(' '):
+    song_search_params = {
+        'q': 
+    }"""
+
+    return redirect('spotify')
+    #return render_template('spotify.html', strings = markovified)
+    #return render_template('spotify-debug.html', response_data = profile_data, strings = markovified, headerstring = personalization_data)
 
 @app.route('/spotify')
 def spotify():
-    return render_template('spotify.html')
+    markovified = session.get('markovified')
+    return render_template('spotify.html', strings = markovified)
 
 
 if __name__ == '__main__':
