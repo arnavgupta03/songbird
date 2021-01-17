@@ -32,3 +32,11 @@ def onlyAlphabet(sTweets):
 
 def deEmojify(text):
     return re.sub(emoji.get_emoji_regexp(), r"", text)
+
+def getAllGenres(genres):
+    sGenre = ""
+
+    for genrelist in genres:
+        for genre in genrelist:
+            sGenre += genre
+            sGenre += " "

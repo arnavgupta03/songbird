@@ -20,9 +20,9 @@ oauth.register(
     fetch_token=lambda: session.get('token'),
 )
 
-"""@app.errorhandler(OAuthError)
+@app.errorhandler(OAuthError)
 def handle_error(error):
-    return render_template('error.html', error=error)"""
+    return render_template('error.html', error=error)
 
 @app.route('/')
 def homepage():
@@ -80,7 +80,7 @@ SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_API_URL = 'https://api.spotify.com/v1'
 
 SPOTIFY_REDIRECT_URI = 'http://localhost:5000/authorize_spotify'
-SPOTIFY_SCOPES = 'user-top-read playlist-modify-private'
+SPOTIFY_SCOPES = 'user-top-read playlist-modify-private playlist-modify-public'
 SPOTIFY_STATE = ""
 SPOTIFY_SHOW_DIALOG = 'true'
 
@@ -118,11 +118,15 @@ def authorize_spotify():
 
     authorization_header = {'Authorization': 'Bearer {}'.format(access_token)}
 
+    session.pop('token', None)
+    session.pop('user', None)
+
     markovified = session.get('markovified')
 
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
     profile_response = requests.get(user_profile_api_endpoint, headers = authorization_header)
     profile_data = json.loads(profile_response.text)
+    #session['profile_data'] = profile_data['uri'][13:]
 
     personalization_api_endpoint = "{}/me/top/artists".format(SPOTIFY_API_URL)
     personalization_params = {
@@ -131,14 +135,47 @@ def authorize_spotify():
     }
     personalization_response = requests.get(personalization_api_endpoint, headers = authorization_header, params = personalization_params)
     personalization_data = json.loads(personalization_response.text)
+    #session['personalization_data'] = personalization_data
+
+    user_id = profile_data['uri'][13:]
+
+    create_playlist_api_endpoint = "{}/users/{}/playlists".format(SPOTIFY_API_URL, user_id)
+    create_playlist_params = json.dumps({
+        'name': markovified
+    })
+    create_playlist_response = requests.post(create_playlist_api_endpoint, data = create_playlist_params, headers = authorization_header)
+    create_playlist_data = json.loads(create_playlist_response.text)
+    playlist_uri = create_playlist_data['uri'][17:]
 
     song_counter = 0
     song_search_api_endpoint = "{}/search".format(SPOTIFY_API_URL)
 
-    """for word in markovified.split(' '):
-    song_search_params = {
-        'q': 
-    }"""
+    songs = []
+
+    for word in markovified.split(' '):
+        song_search_params = {
+            'q': word,
+            'type': 'track',
+            'limit': '1',
+        }
+        song_search_response = requests.get(song_search_api_endpoint, headers = authorization_header, params = song_search_params)
+        song_search_data = json.loads(song_search_response.text)
+        #session['word'] = word
+        if len(song_search_data['tracks']['items']) > 0:
+            track_uri = song_search_data['tracks']['items'][0]['uri']
+            #session['track_uri'] = track_uri
+            songs.append(track_uri)
+    #session['track_uri'] = songs
+
+    add_playlist_api_endpoint = "{}/playlists/{}/tracks".format(SPOTIFY_API_URL, playlist_uri)
+    add_playlist_params = json.dumps({
+        'uris': songs
+    })
+    add_playlist_response = requests.post(add_playlist_api_endpoint, data = add_playlist_params, headers = authorization_header)
+    add_playlist_data = json.loads(add_playlist_response.text)
+    #session['add_playlist'] = add_playlist_data
+
+    session['playlist_url'] = "https://open.spotify.com/embed/playlist/" + playlist_uri
 
     return redirect('spotify')
     #return render_template('spotify.html', strings = markovified)
@@ -147,7 +184,10 @@ def authorize_spotify():
 @app.route('/spotify')
 def spotify():
     markovified = session.get('markovified')
-    return render_template('spotify.html', strings = markovified)
+    #track_uri = session.get('add_playlist')
+    #word = session.get('word')
+    playlist_url = session.get('playlist_url')
+    return render_template('spotify.html', strings = markovified, playlist_url = playlist_url)
 
 
 if __name__ == '__main__':
