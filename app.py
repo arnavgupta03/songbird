@@ -5,6 +5,8 @@ from loadingscripts import cleanRT, onlyText, cleanEnd, listToString, onlyAlphab
 from markovscripts import chain
 import base64, json, requests
 from urllib.parse import quote
+from waitress import serve
+import logging, os
 
 app = Flask(__name__)
 app.secret_key = config('ACCESS_SECRET')
@@ -190,6 +192,27 @@ def spotify():
     playlist_url = session.get('playlist_url')
     return render_template('spotify.html', strings = markovified, playlist_url = playlist_url)
 
+def create_app():
+  try:
 
+    web_app = Flask(__name__)
+
+    logging.info('Starting up..')
+
+    return web_app
+
+  except Exception as e:
+    logging.exception(e)
+
+# retrieve port
+def get_port():
+  return int(os.environ.get("PORT", 5000))
+
+# start Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+  web_app = create_app()
+
+  web_app.run(debug=False, port=get_port(), host='0.0.0.0')
+
+#if __name__ == '__main__':
+#    serve(app, host='0.0.0.0', port=5000)
